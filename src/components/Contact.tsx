@@ -1,230 +1,222 @@
-import React, { useState } from 'react';
-import { MapPin, Phone, Mail, MessageSquare, Clock, Send } from 'lucide-react';
+import React from 'react';
+import { Phone, Mail, MapPin, Clock } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Contact: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
-  });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    // Reset form
-    setFormData({ name: '', email: '', phone: '', message: '' });
+    const form = e.target as HTMLFormElement;
+    const name = (form.elements.namedItem('name') as HTMLInputElement).value;
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+    const phone = (form.elements.namedItem('phone') as HTMLInputElement).value;
+    const message = (form.elements.namedItem('message') as HTMLTextAreaElement).value;
+
+    const mailtoLink = `mailto:srsewingworld@gmail.com?subject=Contact from ${name}&body=Name: ${name}%0D%0AEmail: ${email}%0D%0APhone: ${phone}%0D%0AMessage: ${message}`;
+    window.location.href = mailtoLink;
   };
 
-  const contactInfo = [
-    {
-      icon: MapPin,
-      title: 'Visit Our Store',
-      details: ['123 Sewing Street, Textile District', 'Mumbai, Maharashtra 400001', 'India'],
-      action: 'Get Directions'
-    },
-    {
-      icon: Phone,
-      title: 'Call Us',
-      details: ['+91 98765 43210', '+91 87654 32109', 'Mon-Sat: 9:00 AM - 7:00 PM'],
-      action: 'Call Now'
-    },
-    {
-      icon: Mail,
-      title: 'Email Us',
-      details: ['info@srsewingworld.com', 'support@srsewingworld.com', 'We reply within 24 hours'],
-      action: 'Send Email'
-    }
-  ];
-
   return (
-    <section id="contact" className="py-16 lg:py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center space-y-4 mb-12">
-          <h2 className="text-sm font-semibold text-teal-600 uppercase tracking-wide">Contact Us</h2>
-          <h3 className="text-3xl lg:text-4xl font-bold text-gray-900">
-            Get in Touch with Our Experts
-          </h3>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Have questions about our products or services? We're here to help! 
-            Reach out to us through any of the channels below.
-          </p>
+    <section id="contact" className="relative py-8 sm:py-16 bg-gradient-to-br from-[#fff6f6] via-[#f9f6ff] to-[#f6faff] overflow-hidden">
+      {/* Removed animated SVG backgrounds */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-8 sm:mb-12">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.7 }}
+            transition={{ duration: 0.6 }}
+            className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 drop-shadow-lg"
+          >
+            Contact Us
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.7 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto"
+          >
+            Get in touch with us for any queries about our products or services
+          </motion.p>
         </div>
-
-        <div className="grid lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
           {/* Contact Information */}
-          <div className="lg:col-span-1 space-y-6">
-            {contactInfo.map((info, index) => (
-              <div
-                key={index}
-                className="bg-gray-50 p-6 rounded-xl hover:bg-white hover:shadow-lg transition-all duration-300 group"
-              >
-                <div className="flex items-start space-x-4">
-                  <div className="bg-teal-100 p-3 rounded-lg group-hover:bg-teal-600 transition-colors duration-300">
-                    <info.icon className="h-6 w-6 text-teal-600 group-hover:text-white transition-colors duration-300" />
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.8 }}
+            className="space-y-6 sm:space-y-8"
+          >
+            <div className="bg-white/80 backdrop-blur-lg rounded-2xl p-4 sm:p-6 shadow-lg border border-[#ff416c]/10">
+              <h4 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">Get in Touch</h4>
+              <div className="space-y-3 sm:space-y-4">
+                <div className="flex items-start space-x-3 sm:space-x-4">
+                  <div className="bg-[#ff416c]/10 p-2 rounded-lg">
+                    <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-[#ff416c]" />
                   </div>
-                  <div className="flex-1">
-                    <h4 className="text-lg font-semibold text-gray-900 mb-2">{info.title}</h4>
-                    <div className="space-y-1">
-                      {info.details.map((detail, idx) => (
-                        <p key={idx} className="text-gray-600 text-sm">{detail}</p>
-                      ))}
-                    </div>
-                    <button className="mt-3 text-teal-600 font-medium hover:text-teal-700 transition-colors">
-                      {info.action} →
-                    </button>
+                  <div>
+                    <p className="text-xs sm:text-sm text-gray-600">Call us at</p>
+                    <a href="tel:+919019229243" className="font-semibold text-[#ff416c] hover:text-[#ff4b2b] transition-colors block text-sm sm:text-base">
+                      +91 9019229243
+                    </a>
+                    <a href="tel:+918861727652" className="font-semibold text-[#ff416c] hover:text-[#ff4b2b] transition-colors block text-sm sm:text-base">
+                      +91 8861727652
+                    </a>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3 sm:space-x-4">
+                  <div className="bg-[#ff416c]/10 p-2 rounded-lg">
+                    <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-[#ff416c]" />
+                  </div>
+                  <div>
+                    <p className="text-xs sm:text-sm text-gray-600">Email us at</p>
+                    <a href="mailto:srsewingworld@gmail.com" className="font-semibold text-[#ff416c] hover:text-[#ff4b2b] transition-colors text-sm sm:text-base">
+                      srsewingworld@gmail.com
+                    </a>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3 sm:space-x-4">
+                  <div className="bg-[#ff416c]/10 p-2 rounded-lg">
+                    <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-[#ff416c]" />
+                  </div>
+                  <div>
+                    <p className="text-xs sm:text-sm text-gray-600">Visit us at</p>
+                    <p className="font-semibold text-gray-900">
+                    <a href="https://www.google.com/maps/place/S+R+Sewing+World/data=!4m7!3m6!1s0x3bae154ae96dbef7:0xa9f4d23eac3c9358!8m2!3d12.9064352!4d77.630724!16s%2Fg%2F11s68kyngd!19sChIJ975t6UoVrjsRWJM8rD7S9Kk?authuser=0&hl=en&rclk=1" className="font-semibold text-[#ff416c] hover:text-[#ff4b2b] transition-colors block text-sm sm:text-base">
+                      Unit -01, 1145, oppo SBI Bank,Main Road,<br />
+                      Mangammanapalya, Bommanahalli,<br />
+                      Bengaluru, Karnataka 560068.
+                      </a>
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3 sm:space-x-4">
+                  <div className="bg-[#ff416c]/10 p-2 rounded-lg">
+                    <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-[#ff416c]" />
+                  </div>
+                  <div>
+                    <p className="text-xs sm:text-sm text-gray-600">Business Hours</p>
+                    <p className="font-semibold text-gray-900 text-sm sm:text-base">Everyday: 10:00 AM - 8:30 PM</p>
                   </div>
                 </div>
               </div>
-            ))}
-
-            {/* Quick Actions */}
-            <div className="bg-teal-600 p-6 rounded-xl text-white">
-              <div className="flex items-center space-x-3 mb-4">
-                <MessageSquare className="h-6 w-6" />
-                <h4 className="text-lg font-semibold">Quick Support</h4>
-              </div>
-              <p className="text-teal-100 mb-4">Need immediate assistance? Connect with us on WhatsApp for instant support.</p>
-              <button className="bg-white text-teal-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors w-full">
-                WhatsApp Now
-              </button>
             </div>
-          </div>
-
-          {/* Contact Form & Map */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* Contact Form */}
-            <div className="bg-gray-50 p-8 rounded-2xl">
-              <div className="flex items-center space-x-3 mb-6">
-                <Send className="h-6 w-6 text-teal-600" />
-                <h4 className="text-xl font-bold text-gray-900">Send us a Message</h4>
+            {/* Map */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.7 }}
+              className="bg-white/80 backdrop-blur-lg rounded-2xl p-4 sm:p-6 shadow-lg border border-[#ff416c]/10"
+            >
+              <h4 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">Location</h4>
+              <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d8405.954701970977!2d77.630724!3d12.906435!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae154ae96dbef7%3A0xa9f4d23eac3c9358!2sS%20R%20Sewing%20World!5e1!3m2!1sen!2sin!4v1750107498724!5m2!1sen!2sin"
+                  width="100%"
+                  height="300"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="SR Sewing World Location"
+                  aria-label="Google Maps showing SR Sewing World location"
+                ></iframe>
               </div>
-              
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent transition-all duration-200"
-                      placeholder="Enter your full name"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent transition-all duration-200"
-                      placeholder="Enter your email"
-                    />
-                  </div>
-                </div>
-                
+            </motion.div>
+          </motion.div>
+          {/* Contact Form and Card */}
+          <div className="flex flex-col gap-6 sm:gap-8">
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.8 }}
+              className="bg-white/80 backdrop-blur-lg rounded-2xl p-4 sm:p-6 shadow-lg border border-[#ff416c]/10 h-[500px] sm:h-[600px] flex flex-col"
+            >
+              <h4 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">Send us a Message</h4>
+              <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 flex-1 flex flex-col">
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                    Phone Number
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ff416c] focus:border-transparent bg-white/80 text-sm sm:text-base"
+                    placeholder="Your name"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ff416c] focus:border-transparent bg-white/80 text-sm sm:text-base"
+                    placeholder="your.email@example.com"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                    Phone
                   </label>
                   <input
                     type="tel"
                     id="phone"
                     name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent transition-all duration-200"
-                    placeholder="Enter your phone number"
+                    required
+                    className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ff416c] focus:border-transparent bg-white/80 text-sm sm:text-base"
+                    placeholder="Your phone number"
                   />
                 </div>
-                
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                    Message *
+                <div className="flex-1 min-h-[100px] sm:min-h-[120px]">
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                    Message
                   </label>
                   <textarea
                     id="message"
                     name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
                     required
-                    rows={5}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-600 focus:border-transparent transition-all duration-200 resize-none"
-                    placeholder="Tell us about your requirements or questions..."
+                    rows={4}
+                    className="w-full h-[100px] sm:h-[120px] px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ff416c] focus:border-transparent resize-none bg-white/80 text-sm sm:text-base"
+                    placeholder="Your message"
                   ></textarea>
                 </div>
-                
-                <button
-                  type="submit"
-                  className="w-full bg-teal-600 text-white py-4 rounded-lg font-semibold hover:bg-teal-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2"
-                >
-                  <Send className="h-5 w-5" />
-                  <span>Send Message</span>
-                </button>
+                <div className="pt-2 sm:pt-4">
+                  <motion.button
+                    type="submit"
+                    whileHover={{ scale: 1.04 }}
+                    className="w-full bg-gradient-to-r from-[#ff416c] to-[#ff4b2b] text-white py-2.5 sm:py-3 rounded-lg font-semibold hover:from-[#ff4b2b] hover:to-[#ff416c] transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
+                  >
+                    Send Message
+                  </motion.button>
+                </div>
               </form>
-            </div>
-
-            {/* Map */}
-            <div className="bg-gray-200 rounded-2xl h-64 flex items-center justify-center">
-              <div className="text-center text-gray-600">
-                <MapPin className="h-12 w-12 mx-auto mb-4" />
-                <p className="text-lg font-medium">Interactive Map</p>
-                <p className="text-sm">Google Maps integration would go here</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Business Hours */}
-        <div className="bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl p-8 text-white">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <div className="flex items-center space-x-3 mb-4">
-                <Clock className="h-6 w-6" />
-                <h4 className="text-xl font-bold">Business Hours</h4>
-              </div>
-              <div className="space-y-2 text-gray-300">
-                <div className="flex justify-between">
-                  <span>Monday - Friday</span>
-                  <span>9:00 AM - 7:00 PM</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Saturday</span>
-                  <span>9:00 AM - 6:00 PM</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Sunday</span>
-                  <span>10:00 AM - 4:00 PM</span>
-                </div>
-              </div>
-            </div>
-            <div className="text-center md:text-right">
-              <p className="text-lg mb-4">Ready to find your perfect sewing machine?</p>
-              <button className="bg-teal-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-teal-700 transition-colors">
-                Visit Our Showroom
-              </button>
-            </div>
+            </motion.div>
+            {/* Why Choose Us Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.7 }}
+              className="bg-gradient-to-br from-[#fff6f6] via-[#f9f6ff] to-[#f6faff] rounded-2xl p-6 shadow-lg border border-[#ff416c]/10 flex flex-col items-center text-center"
+            >
+              <h4 className="text-xl font-bold text-[#ff416c] mb-4">Why Choose SR Sewing World?</h4>
+              <ul className="space-y-3 text-gray-700 text-base">
+                <li><span className="font-semibold text-[#ff416c]">✔ Expert Guidance:</span> 30+ years of experience</li>
+                <li><span className="font-semibold text-[#ff416c]">✔ Genuine Products:</span> 100% original brands</li>
+                <li><span className="font-semibold text-[#ff416c]">✔ Fast Service:</span> Quick delivery & installation</li>
+                <li><span className="font-semibold text-[#ff416c]">✔ Warranty Support:</span> 1-year service, 3-year PCB</li>
+                <li><span className="font-semibold text-[#ff416c]">✔ Customer Care:</span> Friendly, reliable support</li>
+              </ul>
+            </motion.div>
           </div>
         </div>
       </div>

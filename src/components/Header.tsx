@@ -22,10 +22,12 @@ const Header: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
-          <div className="flex items-center space-x-3">
-            <div className="bg-teal-600 p-2 rounded-lg">
-              <Scissors className="h-6 w-6 text-white" />
-            </div>
+         <div className="flex items-center space-x-3">
+          <img
+            src="/images/logo.jpg"
+            alt="S R Sewing World Logo"
+            className="h-12 w-12 object-contain rounded-lg"
+          />
             <div>
               <h1 className="text-2xl font-bold text-gray-900">S R Sewing World</h1>
               <p className="text-sm text-gray-600">Professional Sewing Solutions</p>

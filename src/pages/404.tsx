@@ -1,0 +1,19 @@
+import React from 'react';
+import SEO from '../components/SEO';
+
+const FourOhFour: React.FC = () => (
+  <>
+    <SEO
+      title="404 - Page Not Found | SR Sewing World"
+      description="Sorry, the page you are looking for does not exist. Find sewing machines, services, and more at SR Sewing World, Bangalore."
+      url="https://srsewingworld.in/404"
+    />
+    <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
+      <h1 className="text-5xl font-bold text-red-600 mb-4">404</h1>
+      <p className="text-xl text-gray-700 mb-6">Page Not Found</p>
+      <p className="text-gray-500">The page you are looking for does not exist.</p>
+    </div>
+  </>
+);
+// hello 
+export default FourOhFour; 
