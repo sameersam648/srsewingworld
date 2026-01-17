@@ -16,4 +16,8 @@ const FourOhFour: React.FC = () => (
   </>
 );
 
+<<<<<<< HEAD
 export default FourOhFour;
+=======
+export default FourOhFour; 
+>>>>>>> ef38546f169cd1861b24546e731595eae9a98491
