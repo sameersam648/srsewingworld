@@ -34,14 +34,22 @@ export default defineConfig({
   },
 
   // Server configuration
-  server: {
-    port: 5173,
-    host: true,
-    strictPort: false,
-    headers: {
-      'Cache-Control': 'public, max-age=31536000, immutable',
-    },
+ // Server configuration
+server: {
+  port: 5173,
+  host: true,
+  strictPort: false,
+
+  allowedHosts: [
+    'srsewingworld.com',
+    'www.srsewingworld.com',
+  ],
+
+  headers: {
+    'Cache-Control': 'public, max-age=31536000, immutable',
   },
+},
+
 
   // Development configuration
   define: {
