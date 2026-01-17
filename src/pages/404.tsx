@@ -15,5 +15,5 @@ const FourOhFour: React.FC = () => (
     </div>
   </>
 );
-// hello 
-export default FourOhFour; 
+
+export default FourOhFour;
