@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { getGoogleShoppingStructuredData } from '../utils/merchantConfig';
 
 interface SEOProps {
   title?: string;
@@ -27,7 +28,7 @@ const SEO: React.FC<SEOProps> = ({
   const seoImage = image || product?.image || defaultImage;
   const seoUrl = url;
 
-  const structuredData: any = {
+  let structuredData: any = {
     "@context": "https://schema.org",
     "@type": "Store",
     "name": "SR Sewing World",
@@ -57,21 +58,19 @@ const SEO: React.FC<SEOProps> = ({
   };
 
   if (product) {
-    structuredData["@type"] = "Product";
-    structuredData["name"] = product.name;
-    structuredData["description"] = product.description;
-    structuredData["image"] = product.image;
-    structuredData["offers"] = {
-      "@type": "Offer",
-      "price": product.price,
-      "priceCurrency": "INR",
-      "availability": "https://schema.org/InStock",
-      "seller": {
-        "@type": "Organization",
-        "name": "SR Sewing World"
-      }
-    };
-    structuredData["url"] = seoUrl;
+    // For product pages, include Google Shopping structured data
+    const productStructuredData = getGoogleShoppingStructuredData({
+      name: product.name,
+      description: product.description,
+      image: product.image,
+      price: product.price,
+      currency: "INR",
+      availability: "in_stock",
+      url: seoUrl,
+      brand: "SR Sewing World",
+      sku: product.name.toLowerCase().replace(/\s+/g, '-'),
+    });
+    structuredData = { ...structuredData, ...productStructuredData };
   }
 
   return (
@@ -100,6 +99,9 @@ const SEO: React.FC<SEOProps> = ({
       <meta name="revisit-after" content="7 days" />
       <meta name="author" content="SR Sewing World" />
       
+      {/* Google Merchant Center Verification */}
+      <meta name="google-site-verification" content="YOUR_MERCHANT_ID" />
+      
       {/* Canonical URL */}
       <link rel="canonical" href={seoUrl} />
       
@@ -111,4 +113,4 @@ const SEO: React.FC<SEOProps> = ({
   );
 };
 
-export default SEO; 
+export default SEO;

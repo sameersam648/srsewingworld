@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Wrench, Shield, GraduationCap, Headphones, Clock, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import ServiceScheduleModal from './ServiceScheduleModal';
 
 const Services: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const services = [
     {
       icon: Wrench,
@@ -86,12 +88,12 @@ const Services: React.FC = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.12 }}
-              className="bg-white/70 backdrop-blur-lg p-6 sm:p-8 rounded-2xl hover:shadow-2xl transition-all duration-300 group border border-[#ff416c]/10 hover:border-[#ff416c]/30"
+              className="bg-white/70 hover:bg-white-100 backdrop-blur-lg p-6 sm:p-8 rounded-2xl hover:shadow-2xl transition-all duration-300 group border border-[#ff416c]/10 hover:border-[#ff416c]/30"
             >
               <div className="flex items-start space-x-4">
                 <div className="flex-shrink-0">
-                  <div className="bg-[#ff416c]/10 p-4 rounded-xl group-hover:bg-[#ff416c]/20 transition-colors duration-300">
-                    <service.icon className="h-8 w-8 text-[#ff416c] group-hover:text-white transition-colors duration-300" />
+                  <div className="bg-[#ff416c]/10 p-4 rounded-xl group-hover:bg-[#ff416c]/30 transition-colors duration-300">
+                    <service.icon className="h-8 w-8 text-[#ff416c] group-hover:text-red-500 transition-colors duration-300" />
                   </div>
                 </div>
                 <div className="flex-1 space-y-4">
@@ -128,13 +130,13 @@ const Services: React.FC = () => {
                 Contact us today for a free consultation.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                <a
-                  href="mailto:srsewingworld@gmail.com?subject=Service%20Request&body=I would like to schedule a service. Please contact me."
+                <button
+                  onClick={() => setIsModalOpen(true)}
                   className="bg-white text-[#ff416c] px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-center"
-                  aria-label="Schedule Service via Email"
+                  aria-label="Schedule Service"
                 >
                   Schedule Service
-                </a>
+                </button>
                 <a
                   href="tel:+919019229243"
                   className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-[#ff416c] transition-colors text-center"
@@ -159,6 +161,9 @@ const Services: React.FC = () => {
           </div>
         </motion.div>
       </div>
+      
+      {/* Service Schedule Modal */}
+      <ServiceScheduleModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 };

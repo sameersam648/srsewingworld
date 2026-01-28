@@ -1,11 +1,12 @@
-import React, { Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { Suspense, useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import RAGChatBot from './components/RAGChatBot';
 import { CartProvider } from './contexts/CartContext';
 import Cart from './components/Cart';
+import { trackPageView } from './utils/analyticsConfig';
 
 // Lazy load pages for better performance
 const HomePage = React.lazy(() => import('./pages/HomePage'));
@@ -23,6 +24,12 @@ const PageLoadingFallback = () => (
 );
 
 const App: React.FC = () => {
+  const location = useLocation();
+
+  // Track page views on route change
+  useEffect(() => {
+    trackPageView(location.pathname, document.title);
+  }, [location.pathname]);
   return (
     <HelmetProvider>
       <CartProvider>

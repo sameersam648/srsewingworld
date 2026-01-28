@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import AnimatedNumber from './AnimatedNumber';
 
 const Brands: React.FC = () => {
   const brands = [
@@ -67,7 +68,7 @@ const Brands: React.FC = () => {
               className="bg-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 group border border-transparent"
             >
               <div className="text-center">
-                <div className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-400 group-hover:text-gray-800 transition-colors duration-300">
+                <div className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 group-hover:text-gray-1000 transition-colors duration-300">
                   {brand.logo}
                 </div>
                 <div className="text-xs sm:text-sm text-gray-500 mt-1 sm:mt-2">{brand.name}</div>
@@ -98,7 +99,13 @@ const Brands: React.FC = () => {
               transition={{ duration: 0.6, delay: idx * 0.15 }}
               className="space-y-2"
             >
-              <div className="text-3xl sm:text-4xl font-bold text-gray-900">{stat.value}</div>
+              <div className="text-3xl sm:text-4xl font-bold text-gray-900">
+                <AnimatedNumber
+                  end={stat.value}
+                  suffix={stat.value.includes('+') ? '+' : stat.value.includes('%') ? '%' : ''}
+                  duration={2000}
+                />
+              </div>
               <div className="text-gray-600 text-sm sm:text-base">{stat.label}</div>
             </motion.div>
           ))}
